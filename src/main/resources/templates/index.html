@@ -30,7 +30,7 @@
     <button type="submit">Log in</button>
   </form>
 
-  <form id="registerForm" class="user-form" onsubmit="return validateRegisterForm()">
+  <form id="registerForm" class="user-form" onsubmit="return validateRegisterForm()" method="post" action= "/register">
     <h2>NEW USER?</h2>
     <p>Register here:</p>
     <input type="email" id="registerEmail" name="email" placeholder="Email" required>

@@ -8,6 +8,9 @@ public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @Column (name = "Email")
+    private String email; 
+
     @Column(name = "Username") 
     private String username; 
 
@@ -17,16 +20,17 @@ public class User {
     @Column(name = "is_Guest")
     private boolean isGuest; 
 
-    // constructor INSERT INTO Users (id, id, Username, Email, Password, isGuest)
+    // constructor INSERT INTO Users (id, Username, Email, Password, isGuest)
     
     public User() {
     }
    
-    public User(String username, String password, boolean isGuest)
+    public User(String username, String password, boolean isGuest, String email)
     {
         this.username = username; 
         this.password = password; 
         this.isGuest = isGuest; 
+        this.email = email; 
     }
     
     public String getUsername()

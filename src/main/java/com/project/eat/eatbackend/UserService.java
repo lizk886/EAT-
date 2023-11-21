@@ -2,11 +2,15 @@ package com.project.eat.eatbackend;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import jakarta.transaction.Transactional;
+
 import java.io.IOException;
 
 // encapsulates the business logic related to user management (creating a user, finding a user by username and password, updating the user, deleting the user)
 // uses the functions from UserRepository to do so, serves as another layer 
 @Service
+@Transactional
 public class UserService {
 
     private final UserRepository userRepository;
@@ -14,11 +18,6 @@ public class UserService {
     @Autowired
     public UserService(UserRepository userRepository) {
         this.userRepository = userRepository;
-    }
-
-    // Creating a user 
-    public User createUser(User newUser) {
-        return userRepository.save(newUser);
     }
 
     public boolean authenticateUser(String username, String password) {
@@ -42,6 +41,27 @@ public class UserService {
         } else {
             // Handle the case where the user is not found
             throw new IOException("User with the provided username and password not found.");
+        }
+    }
+
+    public boolean registerUser(String username, String password, String email)
+    {
+        if (userRepository.existsByEmail(email) || userRepository.existsByUsername(username))
+        {
+            // registration error with preexisting email/username 
+            return false;
+        }
+
+        else 
+        {
+            User newUser = new User(username, password, false, email); 
+            try {
+                userRepository.save(newUser);
+            } catch (Exception e) {
+                e.printStackTrace();
+                // handle exception
+            }
+            return true; 
         }
     }
 }

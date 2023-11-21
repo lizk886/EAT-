@@ -13,16 +13,11 @@ public class WebController {
     return "index"; 
     }
 
-    @GetMapping("/loginerror")
-    public String LoginError()
-    {
-        return "loginerror"; 
-    }
 
-   // @GetMapping("/register")
-   // public String Register()
-  //  {
-        // displays the register form 
-    //    return "register";
-   // }
+   @GetMapping("/dining")
+   public String Register()
+    {
+    // displays the dining hall 
+        return "diningViewer";
+   }
 }

@@ -25,4 +25,8 @@ public interface UserRepository extends JpaRepository<User, Long> {
         @Param("password") String password
     );
 
+    // query method derivation by Spring Boot
+    boolean existsByUsername(String username);
+    boolean existsByEmail(String email);
+
 }
