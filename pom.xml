@@ -59,7 +59,7 @@
             <groupId>jakarta.persistence</groupId>
             <artifactId>jakarta.persistence-api</artifactId>
         </dependency>
-
+		
 		<!-- Spring Data JPA -->
     	<dependency>
         	<groupId>org.springframework.boot</groupId>
