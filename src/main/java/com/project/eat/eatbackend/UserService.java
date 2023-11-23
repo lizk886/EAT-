@@ -36,7 +36,7 @@ public class UserService {
     public User findUser(String username, String Password) throws IOException {
         User user = userRepository.findUserByUsernameAndPassword(username, Password); 
          if (user != null) {
-            // User found, returns the correct userINSERT INTO Users (id, id, Username, Email, Password, is_Guest)
+            // User found, returns the correct user
             return user; 
         } else {
             // Handle the case where the user is not found

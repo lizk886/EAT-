@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Dining Hall Viewer</title>
+    <link rel="stylesheet" type="text/css" href="style.css">
+</head>
+<body>
+    <div id="menu-venue-title">
+        <ul style="list-style-type: none;">
+            <!-- Iterate over each DiningHall, create a clickable link to each dininghall -->
+            <li th:each="dininghall : ${dininghalls}">
+                <a th:href="'/dininghall/' + ${#strings.replace(dininghall.name, ' ', '-')}">
+                <h2 th:text="${dininghall.name}"> Dining Hall Name</h2>
+            </li>
+        </ul>
+    </div>
+</body>
+</html>
