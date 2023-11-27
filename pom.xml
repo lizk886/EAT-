@@ -56,6 +56,13 @@
    		</dependency>
 
 		<dependency>
+    		<groupId>mysql</groupId>
+   			<artifactId>mysql-connector-java</artifactId>
+    		<version>8.0.26</version> <!-- Use the appropriate version -->
+		</dependency>
+
+
+		<dependency>
             <groupId>jakarta.persistence</groupId>
             <artifactId>jakarta.persistence-api</artifactId>
         </dependency>

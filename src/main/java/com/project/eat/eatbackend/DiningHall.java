@@ -1,34 +1,48 @@
 package com.project.eat.eatbackend;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Table;
+import java.util.ArrayList;
+import java.util.List;
 
+import jakarta.persistence.*;
+
+@Entity
 @Table(name = "DiningHall")
 public class DiningHall {
+    @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "DiningHall_id")
     private long DiningHall_id;
 
     @Column(name = "DiningHall_name") 
-    private String DiningHall_name; 
+    private String name; 
+
+    @OneToMany(mappedBy = "diningHall", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<MenuItem> menu = new ArrayList<>();
 
     public DiningHall() {
-
     }
 
     public DiningHall(String name)
     {
-        this.DiningHall_name = name; 
+        this.name = name; 
     }
 
     public String getName()
     {
-        return DiningHall_name; 
+        return name; 
     }
 
-    public long getID()
+    public long getDiningHall_id()
     {
         return DiningHall_id; 
+    }
+
+    public List<MenuItem> getMenu()
+    {
+        return menu; 
+    }
+
+    public void addMenuItem(MenuItem item) {
+        this.menu.add(item);
     }
 }
