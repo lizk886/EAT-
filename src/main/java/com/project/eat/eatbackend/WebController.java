@@ -69,7 +69,6 @@ public class WebController {
                               // makes the matchdininghall object to the matched dining hall object from the
                               // arrayList of dining halls
                               matchedDiningHall = hall;
-                              System.out.println(matchedDiningHall.getName());
                               break;
                          }
                     }
@@ -79,6 +78,7 @@ public class WebController {
                     // prefix every subsequent ingredient with "Made to order omelets ingredient"
                     // and save into my class MenuItem and DiningHall"
                     // ChatGPT, Apr 2023 version, OpenAI, 24 Nov. 2023 chat.openai.com/chat
+                    // ...
                     if (matchedDiningHall != null) {
                          Elements categories = section.select("h4");
                          for (Element categoryElement : categories) {
@@ -87,62 +87,51 @@ public class WebController {
 
                               if (menuList != null) {
                                    Elements menuItems = menuList.select("li");
-                                   boolean isFirstMenuItem = true; // Flag to identify the first menu item
-                                   boolean isMadeToOrderOmelets = false; // Flag to identify "MADE TO ORDER OMELETS"
-                                   boolean isPhoBowlBar = false;
-                                   boolean isQueso = false;
+                                   String firstMenuItemText = menuItems.first().text();
+                                   boolean isMadeToOrderOmelets = firstMenuItemText
+                                             .equalsIgnoreCase("MADE TO ORDER OMELETES");
+                                   boolean isPhoBowlBar = firstMenuItemText.equalsIgnoreCase("PHO BOWL BAR");
+                                   boolean isQueso = firstMenuItemText
+                                             .equalsIgnoreCase("MADE TO ORDER BREAKFAST QUESADILLA BAR");
 
                                    for (Element menuItemElement : menuItems) {
-                                        // deleting the <span> elements from itemName
+                                        // Deleting the <span> elements from itemName
                                         menuItemElement.select("span").remove();
                                         String itemName = menuItemElement.text();
 
-                                        if (isFirstMenuItem) {
-                                             if (itemName.equalsIgnoreCase("MADE TO ORDER OMELETES")) {
-                                                  isFirstMenuItem = false;
-                                                  isMadeToOrderOmelets = true; // Set the flag to true
-                                             } else if (itemName.equalsIgnoreCase("PHO BOWL BAR")) {
-                                                  isFirstMenuItem = false;
-                                                  isPhoBowlBar = true;
-                                             } else if (itemName.equalsIgnoreCase("MADE TO ORDER BREAKFAST QUESADILLA BAR")) {
-                                                  isFirstMenuItem = false;
-                                                  isQueso = true;
+                                        boolean itemExists = false;
+                                        for (MenuItem existingItem : matchedDiningHall.getMenu()) {
+                                             // Check for duplicates based on itemName and categoryName
+                                             if (existingItem.getItem_name().equals(itemName)
+                                                       && existingItem.getCategory().equals(categoryName)) {
+                                                  itemExists = true;
+                                                  break;
                                              }
-                                        } else {
-                                             boolean itemExists = false;
-                                             for (MenuItem existingItem : matchedDiningHall.getMenu()) {
-                                                  // (3 lines) "How do I check for duplicates saved MenuItems and make sure I only save one of each into DiningHall"
-                                                  // ChatGPT, Apr 2023 version, OpenAI, 26 Nov. 2023 chat.openai.com/chat
-                                                  if (existingItem.getItem_name().equals(itemName) && existingItem.getCategory().equals(categoryName)) {
-                                                       itemExists = true;
-                                                       break;
-                                                  }
+                                        }
+
+                                        if (!itemExists) {
+                                             String processedItemName = itemName; // Create a new variable
+                                             if (isMadeToOrderOmelets) {
+                                                  // Process all items with the prefix
+                                                  processedItemName = "Made to Order Omelete ingredient: " + itemName;
+                                             } else if (isPhoBowlBar) {
+                                                  processedItemName = "Pho Bowl Bar ingredient: " + itemName;
+                                             } else if (isQueso) {
+                                                  processedItemName = "Made to Order Breakfast Quesadilla Bar ingredient: "
+                                                            + itemName;
                                              }
 
-                                             if (!itemExists) {
-                                                  String processedItemName = itemName; // Create a new variable
-                                                  if (isMadeToOrderOmelets) {
-                                                       // Process subsequent items with the prefix
-                                                       processedItemName = "Made to Order Omelete ingredient: "
-                                                                 + itemName;
-                                                  } else if (isPhoBowlBar) {
-                                                       processedItemName = "Pho Bowl Bar ingredient: " + itemName;
-                                                  } else if (isQueso) {
-                                                       processedItemName = "Made to Order Breakfast Quesadilla Bar ingredient: "
-                                                                 + itemName;
-                                                  }
-
-                                                  MenuItem menuItem = new MenuItem();
-                                                  menuItem.setDiningHall(matchedDiningHall);
-                                                  menuItem.setItem_name(processedItemName);
-                                                  menuItem.setCategory(categoryName);
-                                                  matchedDiningHall.getMenu().add(menuItem);
-                                             }
+                                             MenuItem menuItem = new MenuItem();
+                                             menuItem.setDiningHall(matchedDiningHall);
+                                             menuItem.setItem_name(processedItemName);
+                                             menuItem.setCategory(categoryName);
+                                             matchedDiningHall.getMenu().add(menuItem);
                                         }
                                    }
                               }
                          }
                     }
+
                }
           } catch (Exception e) {
                e.printStackTrace();
