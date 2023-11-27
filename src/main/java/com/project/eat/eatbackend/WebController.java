@@ -5,8 +5,6 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
-import org.slf4j.LoggerFactory;
-import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -19,7 +17,6 @@ public class WebController {
 
      @Autowired
      private DiningHallRepository DiningHallRepository;
-     private static final Logger logger = LoggerFactory.getLogger(WebController.class);
 
      @GetMapping("/")
      public String Login() {
@@ -40,15 +37,9 @@ public class WebController {
           dininghalls.add(dininghall2);
           dininghalls.add(dininghall3);
           // save it into the database
-          try {
-               DiningHallRepository.save(dininghall1);
-               DiningHallRepository.save(dininghall2);
-               DiningHallRepository.save(dininghall3);
-
-               logger.info("Saved dining halls to the database");
-          } catch (Exception e) {
-               logger.error("Error saving dining halls", e);
-          }
+          DiningHallRepository.save(dininghall1);
+          DiningHallRepository.save(dininghall2);
+          DiningHallRepository.save(dininghall3);
 
           scrapeandclasscreation(dininghalls);
 
