@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/src/main/resources/static/css/diningHallViewer.css">
+    <title>EAT!</title>
+</head>
+
+<body>
+    <header>
+        <img src="/images/EATLogo.png" alt="EAT Logo" class="LogoInHeader"/>
+    
+        <nav>
+        <a href="/">Home</a>
+        </nav>
+    </header>
+
+    <div id="menu-venue-title">
+        <ul style="list-style-type: none;">
+            <!-- Iterate over each DiningHall, create a clickable link to each dininghall -->
+            <li th:each="dininghall : ${dininghalls}">
+                <a th:href="'/dininghall/' + ${#strings.replace(dininghall.name, ' ', '-')}">
+                <h2 th:text="${dininghall.name}"> Dining Hall Name</h2>
+            </li>
+        </ul>
+    </div>
+    
+</body>
+
+
+</html>
