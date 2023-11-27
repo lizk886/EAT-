@@ -48,6 +48,10 @@ public class User {
         return isGuest; 
     }
 
+    public String getEmail(){
+        return email;
+    }
+
     public void setUsername(String n)
     {
         this.username = n; 
@@ -62,4 +66,9 @@ public class User {
     {
         this.isGuest = val; 
     }
+
+    public void setEmail(String n){
+        this.email = n;
+    }
+
 }

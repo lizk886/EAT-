@@ -1,7 +1,6 @@
 package com.project.eat.eatbackend;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 import org.springframework.http.ResponseEntity;
 import java.util.HashMap;
 import java.util.Map;
@@ -15,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/")
+@CrossOrigin // Allows requests from all origins
 public class UserController {
 
     private final UserService userService;
@@ -25,9 +25,8 @@ public class UserController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<?> authenticateUser(@RequestParam("username") String username,
-                                              @RequestParam("password") String password) {
-        boolean isAuthenticated = userService.authenticateUser(username, password);
+    public ResponseEntity<?> authenticateUser(@RequestBody UserLoginDTO userLoginDto) {
+        boolean isAuthenticated = userService.authenticateUser(userLoginDto.getUsername(), userLoginDto.getPassword());
         Map<String, Object> response = new HashMap<>();
         if (isAuthenticated) {
             response.put("success", true);
@@ -40,14 +39,12 @@ public class UserController {
     }
 
     @PostMapping("/register")
-    public ResponseEntity<?> registerUser(@RequestParam("username") String username,
-                                          @RequestParam("password") String password,
-                                          @RequestParam("email") String email) {
+    public ResponseEntity<?> registerUser(@RequestBody UserRegisterDTO userRegisterDto) {
 
-        boolean isRegistered = userService.registerUser(username, password, email);
+        boolean isRegistered = userService.registerUser(userRegisterDto.getUsername(), userRegisterDto.getPassword(), userRegisterDto.getEmail());
 
         Map<String, Object> response = new HashMap<>();
-        
+
         if (isRegistered) {
             response.put("success", true);
             response.put("redirectUrl", "/diningHallViewer.html");
