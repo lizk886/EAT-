@@ -3,14 +3,14 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="/src/main/resources/static/css/menuViewer.css" />
+    <link rel="stylesheet" href="/css/menuViewer.css" />
     <title>Everybody's Kitchen</title>
   </head>
 
   <body>
     <header>
       <img
-        src="/src/main/resources/static/images/EATLogo.png"
+        src="/images/EATLogo.png"
         alt="EAT Logo"
         class="LogoInHeader"
       />
@@ -28,10 +28,10 @@
       <ul style="list-style-type: none">
         <!-- Iterate over each MenuItem -->
         <!-- Change all the things that says placeHolder -->
-        <li th:each="placeHolder : ${placeHolder}">
+        <li th:each="menuItem : ${menuItems}">
           <div class="card">
             <div class="content">
-              <div class="title" th:text="${placeHolder.name}">
+              <div class="title" th:text="${menuItem.item_name}">
                 Sautéed Kale
               </div>
               <div class="reaction">
@@ -39,7 +39,7 @@
                 <span
                   id="likes-count"
                   class="likes-count"
-                  th:text="${placeHolder.likes-count}"
+                  th:text="${menuItem.likes}"
                   >34</span
                 >
                 <button id="thumb-down" class="thumb">👎</button>
