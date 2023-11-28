@@ -32,28 +32,27 @@ nav a {
   /* home and other tabs if necessary*/
 }
 
-
 .widget-container {
-background-color: #ffcc00; /* Gold background */
-padding: 10px;
-max-width: 600px;
-border-radius: 20px;
-box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-margin: 20px auto; /* centered */
-display: flex;
-justify-content: space-between; /* changed to space-around or space-evenly if needed */
-align-items: center;
+  background-color: #ffcc00; /* Gold background */
+  padding: 10px;
+  max-width: 600px;
+  border-radius: 20px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  margin: 30px auto; /* centered */
+  display: flex;
+  justify-content: space-between; /* changed to space-around or space-evenly if needed */
+  align-items: center;
 }
 
 .block {
-background-color: #990000; /* Light pink background */
-padding: 20px;
-border-radius: 10px;
-box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-font-weight: bold;
-color: white;
+  background-color: #990000; /* Light pink background */
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  font-weight: bold;
+  color: white;
 }
 
 .block:not(:last-child) {
-margin-right: 10px;
+  margin-right: 10px;
 }
