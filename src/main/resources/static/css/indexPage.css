@@ -33,7 +33,7 @@ nav a {
 }
 
 .bannerLogIn {
-  background-image: url("/src/main/resources/static/images/diningHall.png");
+  background-image: url("/images/diningHall.png");
   height: 400px;
   background-size: cover;
   margin: 20px 20px; /* Adds 20 pixels of padding */
