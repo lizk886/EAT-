@@ -30,7 +30,7 @@ public class UserController {
         Map<String, Object> response = new HashMap<>();
         if (isAuthenticated) {
             response.put("success", true);
-            response.put("redirectUrl", "/diningHallViewer.html");
+            response.put("redirectUrl", "/dining");
         } else {
             response.put("success", false);
             response.put("message", "Invalid username or password.");
@@ -47,7 +47,7 @@ public class UserController {
 
         if (isRegistered) {
             response.put("success", true);
-            response.put("redirectUrl", "/diningHallViewer.html");
+            response.put("redirectUrl", "/dining");
         } else {
             response.put("success", false);
             response.put("message", "Registration failed.");

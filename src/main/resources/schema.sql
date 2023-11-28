@@ -1,14 +1,20 @@
-CREATE SCHEMA `backend_eat`;
+-- Check if the schema exists and create it if it does not
+SET @dbname = 'backend_eat';
+SET @exists = (SELECT COUNT(*) FROM information_schema.schemata WHERE schema_name = @dbname);
+SET @stmt = IF(@exists = 0, CONCAT('CREATE SCHEMA ', @dbname), 'SELECT ''Schema already exists''');
+PREPARE stmt FROM @stmt;
+EXECUTE stmt;
+DEALLOCATE PREPARE stmt;
 
 USE `backend_eat`;
 
-CREATE TABLE `DiningHall` (
+CREATE TABLE IF NOT EXISTS `DiningHall` (
   `DiningHall_id` BIGINT NOT NULL AUTO_INCREMENT,
   `DiningHall_Name` VARCHAR(45),
   PRIMARY KEY (`DiningHall_id`)
 );
 
-CREATE TABLE `Users` (
+CREATE TABLE IF NOT EXISTS `Users` (
   `id` BIGINT NOT NULL AUTO_INCREMENT,
   `Username` VARCHAR(50) NOT NULL,
   `Email` VARCHAR(55) NOT NULL,
@@ -17,7 +23,7 @@ CREATE TABLE `Users` (
   PRIMARY KEY (`id`)
 );
 
-CREATE TABLE `MenuItem` (
+CREATE TABLE IF NOT EXISTS `MenuItem` (
   `Item_id` BIGINT NOT NULL AUTO_INCREMENT,
   `DiningHall_id` BIGINT NOT NULL,
   `Category` VARCHAR(100),
@@ -30,3 +36,4 @@ CREATE TABLE `MenuItem` (
     ON DELETE CASCADE
     ON UPDATE NO ACTION
 );
+

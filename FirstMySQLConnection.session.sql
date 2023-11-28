@@ -1,0 +1,1 @@
+DROP DATABASE IF EXISTS backend_eat;

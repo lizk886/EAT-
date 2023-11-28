@@ -1,170 +1,134 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link
-      rel="stylesheet"
-      href="/src/main/resources/static/css/indexPage.css"
-    />
-    <title>EAT! Index Page</title>
-  </head>
 
-  <body>
-    <header>
-      <img
-        src="/src/main/resources/static/images/EATLogo.png"
-        alt="EAT Logo"
-        class="LogoInHeader"
-      />
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="/css/indexPage.css" />
+  <title>EAT! Index Page</title>
+</head>
 
-      <nav>
-        <a href="indexPage.html">Home</a>
-      </nav>
-    </header>
+<body>
+  <header>
+    <img src="/images/EATLogo.png" alt="EAT Logo" class="LogoInHeader" />
 
-    <div class="bannerLogIn"></div>
+    <nav>
+      <a href="indexPage.html">Home</a>
+    </nav>
+  </header>
 
-    <div class="forms-container">
-      <form id="loginForm" class="user-form" method="post" action="/login">
-        <h2>EXISTING USER?</h2>
-        <p>Log in here:</p>
-        <div id="loginErrorMessage" style="color: red; display: none"></div>
-        <input
-          type="text"
-          id="loginUsername"
-          name="username"
-          placeholder="Username"
-          required
-        />
-        <input
-          type="password"
-          id="loginPassword"
-          name="password"
-          placeholder="Password"
-          required
-        />
-        <a href="#">Forgot password?</a>
-        <button type="submit">Log in</button>
-      </form>
+  <div class="bannerLogIn"></div>
 
-      <form
-        id="registerForm"
-        class="user-form"
-        method="post"
-        action="/register"
-      >
-        <h2>NEW USER?</h2>
-        <p>Register here:</p>
-        <div id="registerErrorMessage" style="color: red; display: none"></div>
-        <input
-          type="text"
-          id="registerEmail"
-          name="email"
-          placeholder="Email"
-          required
-        />
-        <input
-          type="text"
-          id="registerUsername"
-          name="username"
-          placeholder="Username"
-          required
-        />
-        <input
-          type="password"
-          id="registerPassword"
-          name="password"
-          placeholder="Password"
-          required
-        />
-        <button type="submit">Sign up</button>
-      </form>
-    </div>
+  <div class="forms-container">
+    <form id="loginForm" class="user-form" method="post" action="/login">
+      <h2>EXISTING USER?</h2>
+      <p>Log in here:</p>
+      <div id="loginErrorMessage" style="color: red; display: none"></div>
+      <input type="text" id="loginUsername" name="username" placeholder="Username" required />
+      <input type="password" id="loginPassword" name="password" placeholder="Password" required />
+      <a href="#">Forgot password?</a>
+      <button type="submit">Log in</button>
+    </form>
 
-    <script>
-      // Registration form AJAX
-      document
-        .getElementById("registerForm")
-        .addEventListener("submit", function (event) {
-          event.preventDefault(); // Prevents default form submission
+    <form id="registerForm" class="user-form" method="post" action="/register">
+      <h2>NEW USER?</h2>
+      <p>Register here:</p>
+      <div id="registerErrorMessage" style="color: red; display: none"></div>
+      <input type="text" id="registerEmail" name="email" placeholder="Email" required />
+      <input type="text" id="registerUsername" name="username" placeholder="Username" required />
+      <input type="password" id="registerPassword" name="password" placeholder="Password" required />
+      <button type="submit">Sign up</button>
+    </form>
+  </div>
 
-          var email = document.getElementById("registerEmail").value;
-          console.log("hello im in register form verification");
+  <script>
+    // Registration form AJAX
+    document
+      .getElementById("registerForm")
+      .addEventListener("submit", function (event) {
+        event.preventDefault(); // Prevents default form submission
 
-          if (!isValidEmail(email)) {
-            displayErrorMessage("Please enter a valid email address.");
-            return false;
+        var email = document.getElementById("registerEmail").value;
+        console.log("hello im in register form verification");
+
+        if (!isValidEmail(email)) {
+          displayErrorMessage("Please enter a valid email address.");
+          return false;
+        }
+
+        var xhr = new XMLHttpRequest();
+        xhr.open(
+          "POST",
+          "/register" /*SERVERSIDE CODE OF REGISTRATION VALIDATION - duplicate email, not usc email*/,
+          true
+        );
+        xhr.setRequestHeader("Content-Type", "application/json");
+
+        xhr.onreadystatechange = function () {
+          if (xhr.readyState == 4 && xhr.status == 200) {
+            var response = JSON.parse(xhr.responseText);
+            if (response.success) {
+              window.location.href = response.redirectUrl; // Redirect based on the URL sent from the server
+            } else {
+              displayErrorMessage(response.message);
+            }
           }
+        };
 
-          var xhr = new XMLHttpRequest();
-          xhr.open(
-            "POST",
-            "/register" /*SERVERSIDE CODE OF REGISTRATION VALIDATION - duplicate email, not usc email*/,
-            true
-          );
-          xhr.setRequestHeader("Content-Type", "application/json");
+        xhr.send(JSON.stringify({
+          email: email,
+          username: document.getElementById("registerUsername").value,
+          password: document.getElementById("registerPassword").value
+        }));
+      });
 
-          xhr.onreadystatechange = function () {
-            if (xhr.readyState == 4 && xhr.status == 200) {
-              var response = JSON.parse(xhr.responseText);
-              if (response.success) {
-                window.location.href = response.redirectUrl; // Redirect based on the URL sent from the server
-              } else {
-                displayErrorMessage(response.message);
-              }
+    function isValidEmail(email) {
+      return /\S+@\S+\.\S+/.test(email);
+    }
+
+    function displayErrorMessage(message) {
+      var errorMessageDiv = document.getElementById("registerErrorMessage");
+      errorMessageDiv.style.display = "block";
+      errorMessageDiv.textContent = message;
+    }
+
+    // Login form AJAX
+    document
+      .getElementById("loginForm")
+      .addEventListener("submit", function (event) {
+        event.preventDefault(); // Prevents default form submission
+
+        var username = document.getElementById("loginUsername").value;
+        var password = document.getElementById("loginPassword").value;
+
+        var xhr = new XMLHttpRequest();
+        xhr.open(
+          "POST",
+          "/login" /*SERVERSIDE CODE OF LOGIN VALIDATION - wrong password, not registered*/,
+          true
+        );
+        xhr.setRequestHeader("Content-Type", "application/json");
+
+        xhr.onreadystatechange = function () {
+          if (xhr.readyState == 4 && xhr.status == 200) {
+            var response = JSON.parse(xhr.responseText);
+            if (response.success) {
+              window.location.href = response.redirectUrl; // Redirect based on the URL sent from the server
+            } else {
+              displayLoginErrorMessage(response.message);
             }
-          };
+          }
+        };
 
-          xhr.send(JSON.stringify({ email: email }));
-        });
+        xhr.send(JSON.stringify({ username: username, password: password }));
+      });
 
-      function isValidEmail(email) {
-        return /\S+@\S+\.\S+/.test(email);
-      }
+    function displayLoginErrorMessage(message) {
+      var errorMessageDiv = document.getElementById("loginErrorMessage");
+      errorMessageDiv.style.display = "block";
+      errorMessageDiv.textContent = message;
+    }
+  </script>
+</body>
 
-      function displayErrorMessage(message) {
-        var errorMessageDiv = document.getElementById("registerErrorMessage");
-        errorMessageDiv.style.display = "block";
-        errorMessageDiv.textContent = message;
-      }
-
-      // Login form AJAX
-      document
-        .getElementById("loginForm")
-        .addEventListener("submit", function (event) {
-          event.preventDefault(); // Prevents default form submission
-
-          var username = document.getElementById("loginUsername").value;
-          var password = document.getElementById("loginPassword").value;
-
-          var xhr = new XMLHttpRequest();
-          xhr.open(
-            "POST",
-            "/login" /*SERVERSIDE CODE OF LOGIN VALIDATION - wrong password, not registered*/,
-            true
-          );
-          xhr.setRequestHeader("Content-Type", "application/json");
-
-          xhr.onreadystatechange = function () {
-            if (xhr.readyState == 4 && xhr.status == 200) {
-              var response = JSON.parse(xhr.responseText);
-              if (response.success) {
-                window.location.href = response.redirectUrl; // Redirect based on the URL sent from the server
-              } else {
-                displayLoginErrorMessage(response.message);
-              }
-            }
-          };
-
-          xhr.send(JSON.stringify({ username: username, password: password }));
-        });
-
-      function displayLoginErrorMessage(message) {
-        var errorMessageDiv = document.getElementById("loginErrorMessage");
-        errorMessageDiv.style.display = "block";
-        errorMessageDiv.textContent = message;
-      }
-    </script>
-  </body>
 </html>
