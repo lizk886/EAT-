@@ -43,6 +43,14 @@ nav a {
   padding: 20px;
   width: 300px;
   text-align: center;
+  margin: 15px;
+}
+
+#menu-items-display ul {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  padding: 0; /* Remove default padding */
 }
 
 .content {
