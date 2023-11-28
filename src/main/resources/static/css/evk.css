@@ -5,6 +5,10 @@ body {
 
 }
 
+h1{
+    margin: 20px 50px;
+  }
+
 header {
   background-color: #ffc72c;
   padding: 10px;
