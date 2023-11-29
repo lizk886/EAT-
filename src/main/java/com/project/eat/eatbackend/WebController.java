@@ -173,14 +173,13 @@ public class WebController {
           }
           return "evk";
      }
-     @GetMapping("/indexPage")
-    public String index() {
-        return "indexPage"; 
-    }
-     @GetMapping("/UserProfile")
-    public String profile() {
-        return "UserProfile"; 
-    }
-     
 
+     @GetMapping("/indexPage")
+     public String index() {
+         return "indexPage"; 
+     }
+      @GetMapping("/UserProfile")
+     public String profile() {
+         return "UserProfile"; 
+     }
 }
