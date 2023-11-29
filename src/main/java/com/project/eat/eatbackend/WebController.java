@@ -2,6 +2,7 @@ package com.project.eat.eatbackend;
 
 import java.util.ArrayList;
 import java.util.List;
+
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -172,4 +173,14 @@ public class WebController {
           }
           return "evk";
      }
+     @GetMapping("/indexPage")
+    public String index() {
+        return "indexPage"; 
+    }
+     @GetMapping("/UserProfile")
+    public String profile() {
+        return "UserProfile"; 
+    }
+     
+
 }
