@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="stylesheet"
+      href="/css/guestdiningHallViewer.css"
+    />
+    <title>EAT!</title>
+  </head>
+
+  <body>
+    <header>
+      <img
+        src="/images/EATLogo.png"
+        alt="EAT Logo"
+        class="LogoInHeader"
+      />
+
+      <nav>
+        <a href="indexPage">Log In/Sign Up</a>
+        <a href="/guestdininghall">Home</a>
+      </nav>
+    </header>
+
+    <div id="menu-venue-title">
+      <ul style="list-style-type: none">
+        <!-- Iterate over each DiningHall, create a clickable link to each dininghall -->
+        <li th:each="dininghall : ${dininghalls}">
+          <div class="widget-container">
+            <div class="block" th:text="${dininghall.name}">Dining Hall Name</div>
+            <a
+              th:href="'/guestdininghall/' + ${#strings.replace(dininghall.name, ' ', '-')}"
+            >
+              <div class="block">View Menu</div>
+            </a>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </body>
+</html>

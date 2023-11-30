@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="/css/guestmenuViewer.css" />
+  <title>Village Dining Hall</title>
+</head>
+
+<body>
+  <header>
+    <img src="/images/EATLogo.png" alt="EAT Logo" class="LogoInHeader" />
+
+    <nav>
+      <a href="/indexPage">Log In/Sign Up</a>
+      <a href="/guestdininghall">Home</a>
+    </nav>
+  </header>
+
+  <div class="titleContainer">
+    <h1>Village Dining Hall</h1>
+  </div>
+
+  <div id="menu-items-display">
+    <ul style="list-style-type: none">
+      <!-- Iterate over each MenuItem -->
+      <!-- Change all the things that says placeHolder -->
+      <li th:each="menuItem : ${menuItems}">
+        <div th:id="${menuItem.item_id}" class="card">
+          <div class="content">
+            <div class="title" th:text="${menuItem.item_name}">
+              village food
+            </div>
+            <div class="reaction">
+              <p th:data-id="${menuItem.item_id}" id="thumb-up" class="thumb">👍</p>
+              <span th:id="'likes-count#' + ${menuItem.item_id}" class="likes-count" th:text="${menuItem.likes} - ${menuItem.dislikes} ">34</span>
+              <p th:data-id="${menuItem.item_id}" id="thumb-down" class="thumb">👎</p>
+            </div>
+          </div>
+        </div>
+      </li>
+    </ul>
+  </div>
+</body>
+
+</html>

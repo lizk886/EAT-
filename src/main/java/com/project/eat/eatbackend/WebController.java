@@ -27,6 +27,30 @@ public class WebController {
      }
 
      @Transactional
+     @GetMapping("/guestdininghall")
+     public String guestdininghallviewer(Model model) {
+          // Create three DiningHall instances
+          DiningHall dininghall1 = new DiningHall("USC Village Dining Hall");
+          DiningHall dininghall2 = new DiningHall("Parkside Restaurant & Grill");
+          DiningHall dininghall3 = new DiningHall("Everybody's Kitchen");
+
+          // Add them to an ArrayList
+          ArrayList<DiningHall> dininghalls = new ArrayList<>();
+          dininghalls.add(dininghall1);
+          dininghalls.add(dininghall2);
+          dininghalls.add(dininghall3);
+          // save it into the database
+          DiningHallRepository.save(dininghall1);
+          DiningHallRepository.save(dininghall2);
+          DiningHallRepository.save(dininghall3);
+
+          scrapeandclasscreation(dininghalls);
+
+          // Add the list of DiningHall instances to the model
+          model.addAttribute("dininghalls", dininghalls);
+          return "guestdininghallviewer";
+      
+     }
      @GetMapping("/dining")
      public String dining(Model model) {
           // Create three DiningHall instances
@@ -140,6 +164,38 @@ public class WebController {
                e.printStackTrace();
           }
      }
+      @GetMapping("/guestdininghall/USC-Village-Dining-Hall")
+     public String guestuscvillage(Model model) {
+          List<DiningHall> villageDiningHalls = DiningHallRepository.findByName("USC Village Dining Hall");
+
+          if (!villageDiningHalls.isEmpty()) {
+               // Assuming you want to display the menu of the first dining hall in the list
+               DiningHall firstVillageDiningHall = villageDiningHalls.get(0);
+               model.addAttribute("menuItems", firstVillageDiningHall.getMenu());
+          }
+          return "guestvillage";
+     }
+     @GetMapping("/guestdininghall/Parkside-Restaurant-&-Grill")
+     public String guestparkside(Model model) {
+          List<DiningHall> parksideDiningHalls = DiningHallRepository.findByName("Parkside Restaurant & Grill");
+
+          if (!parksideDiningHalls.isEmpty()) {
+               DiningHall firstParksideDiningHall = parksideDiningHalls.get(0);
+               model.addAttribute("menuItems", firstParksideDiningHall.getMenu());
+          }
+          return "guestparkside";
+     }
+
+     @GetMapping("/guestdininghall/Everybody's-Kitchen")
+     public String guestevk(Model model) {
+          List<DiningHall> evkDiningHalls = DiningHallRepository.findByName("Everybody's Kitchen");
+
+          if (!evkDiningHalls.isEmpty()) {
+               DiningHall firstevkDiningHall = evkDiningHalls.get(0);
+               model.addAttribute("menuItems", firstevkDiningHall.getMenu());
+          }
+          return "guestevk";
+     }
 
      @GetMapping("/dininghall/USC-Village-Dining-Hall")
      public String uscvillage(Model model) {
@@ -179,10 +235,16 @@ public class WebController {
      public String index() {
          return "indexPage"; 
      }
+     @GetMapping("/indexPage")
+     public String index() {
+         return "indexPage"; 
+     }
       @GetMapping("/UserProfile")
      public String profile() throws IOException {
          
       
          return "UserProfile"; 
      }
+      
+
 }
