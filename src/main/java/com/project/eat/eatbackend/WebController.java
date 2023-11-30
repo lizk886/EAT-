@@ -1,5 +1,6 @@
 package com.project.eat.eatbackend;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -179,7 +180,9 @@ public class WebController {
          return "indexPage"; 
      }
       @GetMapping("/UserProfile")
-     public String profile() {
+     public String profile() throws IOException {
+         
+      
          return "UserProfile"; 
      }
 }

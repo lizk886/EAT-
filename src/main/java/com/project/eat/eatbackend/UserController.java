@@ -1,13 +1,18 @@
 package com.project.eat.eatbackend;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 //import org.springframework.http.HttpStatus;
 //import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 // The controller acts as the intermediary between the frontend and the backend, where the front end sends HTTP requests to specific 
 // URLS. UserController controls user functionalities such as logging in, registering, 
@@ -23,13 +28,18 @@ public class UserController {
     public UserController(UserService userService) {
         this.userService = userService;
     }
+    
 
     @PostMapping("/login")
-    public ResponseEntity<?> authenticateUser(@RequestBody UserLoginDTO userLoginDto) {
+    public ResponseEntity<?> authenticateUser(@RequestBody UserLoginDTO userLoginDto) throws IOException {
         boolean isAuthenticated = userService.authenticateUser(userLoginDto.getUsername(), userLoginDto.getPassword());
         Map<String, Object> response = new HashMap<>();
         if (isAuthenticated) {
+            User user = userService.findUser(userLoginDto.getUsername(), userLoginDto.getPassword());
             response.put("success", true);
+            //response.put("userId", user.getId());    // Assuming you have a getId() in your User class
+            response.put("email", user.getEmail());  // Assuming you have getEmail() in your User class
+            response.put("name", user.getUsername());  
             response.put("redirectUrl", "/dining");
         } else {
             response.put("success", false);

@@ -45,7 +45,12 @@ public class UserService {
             // Handle the case where the user is not found
             throw new IOException("User with the provided username and password not found.");
         }
+        
     }
+    
+    
+
+   
 
     public boolean registerUser(String username, String password, String email)
     {
