@@ -37,9 +37,10 @@ public class UserController {
         if (isAuthenticated) {
             User user = userService.findUser(userLoginDto.getUsername(), userLoginDto.getPassword());
             response.put("success", true);
-            //response.put("userId", user.getId());    // Assuming you have a getId() in your User class
+            response.put("userId", user.getId());    // Assuming you have a getId() in your User class
             response.put("email", user.getEmail());  // Assuming you have getEmail() in your User class
-            response.put("name", user.getUsername());  
+            response.put("name", user.getUsername()); 
+
             response.put("redirectUrl", "/dining");
         } else {
             response.put("success", false);
@@ -57,10 +58,10 @@ public class UserController {
 
         if (isRegistered) {
             User user = userService.findUser(userRegisterDto.getUsername(), userRegisterDto.getPassword());
-
             response.put("success", true);
+            response.put("userId", user.getId());
             response.put("email", user.getEmail());  // Assuming you have getEmail() in your User class
-            response.put("name", user.getUsername());  
+            response.put("name", user.getUsername());
             response.put("redirectUrl", "/dining");
         } else {
             response.put("success", false);

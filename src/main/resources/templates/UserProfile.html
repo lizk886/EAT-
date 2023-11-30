@@ -35,11 +35,15 @@
     window.onload = function() {
       var name = localStorage.getItem('name');
       var email = localStorage.getItem('email');  
+      var userId = localStorage.getItem('userId');  
       if (name) {
           document.getElementById('profileUsername').textContent = name;
       }
       if (email) {
           document.getElementById('profileEmail').textContent = email;
+      }
+      if (userId) {
+          document.getElementById('profileUserId').textContent = userId;
       }
     };
   </script>

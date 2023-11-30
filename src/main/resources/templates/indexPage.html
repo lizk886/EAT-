@@ -70,6 +70,7 @@
             if (response.success) {
               localStorage.setItem('email', response.email);
               localStorage.setItem('name', response.name);
+              localStorage.setItem('userId', response.userId);
               window.location.href = response.redirectUrl; // Redirect based on the URL sent from the server
             } else {
               displayErrorMessage(response.message);
@@ -119,6 +120,7 @@
               
               localStorage.setItem('email', response.email);
               localStorage.setItem('name', response.name);
+              localStorage.setItem('userId', response.userId);
               window.location.href = response.redirectUrl; // Redirect based on the URL sent from the server
             } else {
               displayLoginErrorMessage(response.message);

@@ -9,7 +9,7 @@ import org.springframework.util.DigestUtils;
 import jakarta.transaction.Transactional;
 
 // encapsulates the business logic related to user management (creating a user, finding a user by username and password, updating the user, deleting the user)
-// uses the functions from UserRepository to do so, serves as another layer 
+// uses the functions from UserRepository to do so, serves as another layer
 @Service
 @Transactional
 public class UserService {
@@ -23,7 +23,7 @@ public class UserService {
 
     public boolean authenticateUser(String username, String password) {
         // Retrieve the user by username from the database
-         password=DigestUtils.md5DigestAsHex(password.getBytes());
+        password=DigestUtils.md5DigestAsHex(password.getBytes());
         User user = userRepository.findUserByUsernameAndPassword(username, password);
 
         // Check if the user exists and the password matches
@@ -34,13 +34,13 @@ public class UserService {
         }
     }
 
-    // Find user by username and password 
+    // Find user by username and password
     public User findUser(String username, String Password) throws IOException {
         Password=DigestUtils.md5DigestAsHex(Password.getBytes());
-        User user = userRepository.findUserByUsernameAndPassword(username, Password); 
-         if (user != null) {
+        User user = userRepository.findUserByUsernameAndPassword(username, Password);
+        if (user != null) {
             // User found, returns the correct user
-            return user; 
+            return user;
         } else {
             // Handle the case where the user is not found
             throw new IOException("User with the provided username and password not found.");
@@ -48,30 +48,26 @@ public class UserService {
         
     }
     
-    
-
-   
-
     public boolean registerUser(String username, String password, String email)
     {
         if (userRepository.existsByEmail(email) || userRepository.existsByUsername(username))
         {
-            // registration error with preexisting email/username 
+            // registration error with preexisting email/username
             return false;
         }
 
-        else 
+        else
         {
-            // using md5 for password encryption 
+            // using md5 for password encryption
             password=DigestUtils.md5DigestAsHex(password.getBytes());
-            User newUser = new User(username, password, false, email); 
+            User newUser = new User(username, password, false, email);
             try {
                 userRepository.save(newUser);
             } catch (Exception e) {
                 e.printStackTrace();
                 // handle exception
             }
-            return true; 
+            return true;
         }
     }
 }
