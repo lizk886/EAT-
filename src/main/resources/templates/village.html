@@ -34,7 +34,7 @@
             </div>
             <div class="reaction">
               <button th:data-id="${menuItem.item_id}" id="thumb-up" class="thumb">👍</button>
-              <span th:id="'likes-count#' + ${menuItem.item_id}" class="likes-count" th:text="${menuItem.likes}">34</span>
+              <span th:id="'likes-count#' + ${menuItem.item_id}" class="likes-count" th:text="${menuItem.likes} - ${menuItem.dislikes} ">34</span>
               <button th:data-id="${menuItem.item_id}" id="thumb-down" class="thumb">👎</button>
             </div>
           </div>
@@ -86,7 +86,7 @@
           )
         .then((data) => {
           // Update the likes count on the frontend
-          document.getElementById("likes-count#" + id).textContent = data.likes;
+          location.reload();
         })
         .catch((error) => {
           console.error("Error:", error);
