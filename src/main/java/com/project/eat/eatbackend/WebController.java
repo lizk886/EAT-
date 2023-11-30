@@ -1,6 +1,8 @@
 package com.project.eat.eatbackend;
 
 import java.util.ArrayList;
+import java.util.List;
+
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -139,17 +141,46 @@ public class WebController {
      }
 
      @GetMapping("/dininghall/USC-Village-Dining-Hall")
-     public String uscvillage() {
+     public String uscvillage(Model model) {
+          List<DiningHall> villageDiningHalls = DiningHallRepository.findByName("USC Village Dining Hall");
+
+          if (!villageDiningHalls.isEmpty()) {
+               // Assuming you want to display the menu of the first dining hall in the list
+               DiningHall firstVillageDiningHall = villageDiningHalls.get(0);
+               model.addAttribute("menuItems", firstVillageDiningHall.getMenu());
+          }
           return "village";
      }
 
      @GetMapping("/dininghall/Parkside-Restaurant-&-Grill")
-     public String parkside() {
+     public String parkside(Model model) {
+          List<DiningHall> parksideDiningHalls = DiningHallRepository.findByName("Parkside Restaurant & Grill");
+
+          if (!parksideDiningHalls.isEmpty()) {
+               DiningHall firstParksideDiningHall = parksideDiningHalls.get(0);
+               model.addAttribute("menuItems", firstParksideDiningHall.getMenu());
+          }
           return "parkside";
      }
 
      @GetMapping("/dininghall/Everybody's-Kitchen")
-     public String evk() {
+     public String evk(Model model) {
+          List<DiningHall> evkDiningHalls = DiningHallRepository.findByName("Everybody's Kitchen");
+
+          if (!evkDiningHalls.isEmpty()) {
+               DiningHall firstevkDiningHall = evkDiningHalls.get(0);
+               model.addAttribute("menuItems", firstevkDiningHall.getMenu());
+          }
           return "evk";
      }
+     @GetMapping("/indexPage")
+    public String index() {
+        return "indexPage"; 
+    }
+     @GetMapping("/UserProfile")
+    public String profile() {
+        return "UserProfile"; 
+    }
+     
+
 }

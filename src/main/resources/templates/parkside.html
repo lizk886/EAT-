@@ -1,9 +1,98 @@
 <!DOCTYPE html>
-<html>
-<head>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="stylesheet"
+      href="/css/menuViewer.css"
+    />
     <title>Parkside Dining Hall</title>
-</head>
-<body> 
-    <h1> Parkside Dining Hall MenuItems Displayed Here </h1>
-</body>
+  </head>
+
+  <body>
+    <header>
+      <img
+        src="/images/EATLogo.png"
+        alt="EAT Logo"
+        class="LogoInHeader"
+      />
+
+      <nav>
+        <a href="/UserProfile">Profile</a>
+        <a href="/dining">Home</a>
+      </nav>
+    </header>
+
+    <div class="titleContainer">
+      <h1>Parkside Dining Hall</h1>
+    </div>
+
+    <div id="menu-items-display">
+      <ul style="list-style-type: none">
+        <!-- Iterate over each MenuItem -->
+        <!-- Change all the things that says placeHolder -->
+        <li th:each="menuItem : ${menuItems}">
+          <div class="card">
+            <div class="content">
+              <div class="title" th:text="${menuItem.item_name}">
+                parkside food
+              </div>
+              <div class="reaction">
+                <button id="thumb-up" class="thumb">👍</button>
+                <span
+                  id="likes-count"
+                  class="likes-count"
+                  th:text="${menuItem.likes}"
+                  >34</span
+                >
+                <button id="thumb-down" class="thumb">👎</button>
+              </div>
+            </div>
+          </div>
+        </li>
+      </ul>
+    </div>
+
+    <script>
+      document
+        .getElementById("thumb-up")
+        .addEventListener("click", function () {
+          updateLikes(1);
+        });
+
+      document
+        .getElementById("thumb-down")
+        .addEventListener("click", function () {
+          updateLikes(-1);
+        });
+
+      function updateLikes(change) {
+        // Get the current number of likes
+        let likesCount = parseInt(
+          document.getElementById("likes-count").textContent
+        );
+        // Calculate the new number of likes
+        likesCount += change;
+
+        // Update the likes count on the backend
+        // Placeholder for backend request - use the URL of your backend API
+        fetch("https://placeholder-API", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ likes: likesCount }),
+        })
+          .then((response) => response.json())
+          .then((data) => {
+            // Update the likes count on the frontend
+            document.getElementById("likes-count").textContent = data.likes;
+          })
+          .catch((error) => {
+            console.error("Error:", error);
+          });
+      }
+    </script>
+  </body>
 </html>
