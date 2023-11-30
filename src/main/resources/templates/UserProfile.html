@@ -23,7 +23,7 @@
 <div class="forms-container">
     <form id="loginForm" class="user-form" >
         <div class="left">
-            <h2>Welcome back, Anne</h2>
+            <h2>Welcome back, <span id="profileUsername1"></span></h2>
             <p style="font-size: 20px;">Username: <span id="profileUsername"></span></p>
             <p style="font-size: 20px;">Email: <span id="profileEmail"></span></p>
             <p style="font-size: 20px;">User ID: <span id="profileUserId"></span></p>        
@@ -38,7 +38,9 @@
       var userId = localStorage.getItem('userId');  
       if (name) {
           document.getElementById('profileUsername').textContent = name;
+          document.getElementById('profileUsername1').textContent = name;
       }
+
       if (email) {
           document.getElementById('profileEmail').textContent = email;
       }
