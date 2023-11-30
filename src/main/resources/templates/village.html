@@ -64,21 +64,26 @@
       var id  = e.target.getAttribute("data-id");
 
       let likesCount = parseInt(
-        document.getElementById("likes-count").textContent
+        document.getElementById("likes-count#"+id).textContent
       );
       // Calculate the new number of likes
       likesCount += change;
 
+      var likeOrDislike = change == 1 ? "/like" : "/dislike"
+
       // Update the likes count on the backend
       // Placeholder for backend request - use the URL of your backend API
-      fetch("https://placeholder-API", {
+      fetch("/menuItems/"+id+likeOrDislike, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({ likes: likesCount }),
       })
-        .then((response) => response.json())
+        .then((response) => 
+        {response.json() 
+          console.log(response)}
+          )
         .then((data) => {
           // Update the likes count on the frontend
           document.getElementById("likes-count#" + id).textContent = data.likes;
