@@ -7,6 +7,7 @@ import com.project.eat.eatbackend.MenuItem;
 // the save() method is premade here
 
 @Repository
-public interface DiningHallRepository extends JpaRepository<DiningHall, Long> {
-
+public interface MenuItemRepository extends JpaRepository<MenuItem, Long> {
+    // This might already exist with standard CRUD operations
 }
+
