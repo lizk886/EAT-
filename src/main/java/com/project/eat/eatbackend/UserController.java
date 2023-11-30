@@ -49,14 +49,18 @@ public class UserController {
     }
 
     @PostMapping("/register")
-    public ResponseEntity<?> registerUser(@RequestBody UserRegisterDTO userRegisterDto) {
+    public ResponseEntity<?> registerUser(@RequestBody UserRegisterDTO userRegisterDto) throws IOException {
 
         boolean isRegistered = userService.registerUser(userRegisterDto.getUsername(), userRegisterDto.getPassword(), userRegisterDto.getEmail());
 
         Map<String, Object> response = new HashMap<>();
 
         if (isRegistered) {
+            User user = userService.findUser(userRegisterDto.getUsername(), userRegisterDto.getPassword());
+
             response.put("success", true);
+            response.put("email", user.getEmail());  // Assuming you have getEmail() in your User class
+            response.put("name", user.getUsername());  
             response.put("redirectUrl", "/dining");
         } else {
             response.put("success", false);
