@@ -1,11 +1,12 @@
 package com.project.eat.eatbackend;
 
+import java.io.IOException;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.DigestUtils;
 
 import jakarta.transaction.Transactional;
-
-import java.io.IOException;
 
 // encapsulates the business logic related to user management (creating a user, finding a user by username and password, updating the user, deleting the user)
 // uses the functions from UserRepository to do so, serves as another layer 
@@ -22,6 +23,7 @@ public class UserService {
 
     public boolean authenticateUser(String username, String password) {
         // Retrieve the user by username from the database
+         password=DigestUtils.md5DigestAsHex(password.getBytes());
         User user = userRepository.findUserByUsernameAndPassword(username, password);
 
         // Check if the user exists and the password matches
@@ -34,6 +36,7 @@ public class UserService {
 
     // Find user by username and password 
     public User findUser(String username, String Password) throws IOException {
+        Password=DigestUtils.md5DigestAsHex(Password.getBytes());
         User user = userRepository.findUserByUsernameAndPassword(username, Password); 
          if (user != null) {
             // User found, returns the correct user
@@ -54,6 +57,8 @@ public class UserService {
 
         else 
         {
+            // using md5 for password encryption 
+            password=DigestUtils.md5DigestAsHex(password.getBytes());
             User newUser = new User(username, password, false, email); 
             try {
                 userRepository.save(newUser);
