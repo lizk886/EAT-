@@ -3,8 +3,6 @@ package com.project.eat.eatbackend;
 import org.springframework.stereotype.Service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
-import com.project.eat.eatbackend.MenuItem;
-import com.project.eat.eatbackend.MenuItemRepository;
 import org.springframework.scheduling.annotation.Async;
 
 
