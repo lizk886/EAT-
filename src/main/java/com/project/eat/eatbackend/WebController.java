@@ -12,7 +12,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-
 import jakarta.transaction.Transactional;
 
 @Controller
@@ -21,12 +20,15 @@ public class WebController {
      @Autowired
      private DiningHallRepository DiningHallRepository;
 
+     @Autowired
+     private MenuItemRepository menuItemRepository;
+
      @GetMapping("/")
      public String Login() {
           return "indexPage";
      }
 
-   /*  @Transactional
+     @Transactional
      @GetMapping("/guestdininghall")
      public String guestdininghallviewer(Model model) {
           // Create three DiningHall instances
@@ -50,7 +52,7 @@ public class WebController {
           model.addAttribute("dininghalls", dininghalls);
           return "guestdininghallviewer";
       
-     } */ 
+     } 
      
      @GetMapping("/dining")
      public String dining(Model model) {
@@ -89,7 +91,7 @@ public class WebController {
                for (Element section : diningHallSections) {
                     // extracting the dining hall name
                     String dhname = section.select("h3.menu-venue-title").text();
-
+                    
                     // Find the matching DiningHall object
                     DiningHall matchedDiningHall = null;
                     for (DiningHall hall : dininghalls) {
@@ -149,18 +151,19 @@ public class WebController {
                                                             + itemName;
                                              }
 
+                                        
                                              MenuItem menuItem = new MenuItem();
                                              menuItem.setDiningHall(matchedDiningHall);
                                              menuItem.setItem_name(processedItemName);
                                              menuItem.setCategory(categoryName);
                                              matchedDiningHall.getMenu().add(menuItem);
-                                        }
+                                             menuItem = menuItemRepository.save(menuItem);
+                                             }                      
+                                      }
                                    }
                               }
                          }
                     }
-
-               }
           } catch (Exception e) {
                e.printStackTrace();
           }
