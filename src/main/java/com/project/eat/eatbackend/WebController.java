@@ -26,7 +26,7 @@ public class WebController {
           return "indexPage";
      }
 
-     @Transactional
+   /*  @Transactional
      @GetMapping("/guestdininghall")
      public String guestdininghallviewer(Model model) {
           // Create three DiningHall instances
@@ -44,13 +44,14 @@ public class WebController {
           DiningHallRepository.save(dininghall2);
           DiningHallRepository.save(dininghall3);
 
-          scrapeandclasscreation(dininghalls);
+         scrapeandclasscreation(dininghalls);
 
           // Add the list of DiningHall instances to the model
           model.addAttribute("dininghalls", dininghalls);
           return "guestdininghallviewer";
       
-     }
+     } */ 
+     
      @GetMapping("/dining")
      public String dining(Model model) {
           // Create three DiningHall instances
@@ -235,14 +236,9 @@ public class WebController {
      public String index() {
          return "indexPage"; 
      }
-     @GetMapping("/indexPage")
-     public String index() {
-         return "indexPage"; 
-     }
+
       @GetMapping("/UserProfile")
      public String profile() throws IOException {
-         
-      
          return "UserProfile"; 
      }
       

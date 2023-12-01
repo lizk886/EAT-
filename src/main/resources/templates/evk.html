@@ -27,7 +27,7 @@
       <!-- Iterate over each MenuItem -->
       <!-- Change all the things that says placeHolder -->
       <li th:each="menuItem : ${menuItems}">
-        <div th:id="${menuItem.item_id}" class="card">
+        <div th:id="${menuItem.item_name}" class="card">
           <div class="content">
             <div class="title" th:text="${menuItem.item_name}">
               village food
