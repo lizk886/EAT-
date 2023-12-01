@@ -46,14 +46,14 @@ public class WebController {
           DiningHallRepository.save(dininghall2);
           DiningHallRepository.save(dininghall3);
 
-         scrapeandclasscreation(dininghalls);
+          scrapeandclasscreation(dininghalls);
 
           // Add the list of DiningHall instances to the model
           model.addAttribute("dininghalls", dininghalls);
           return "guestdininghallviewer";
-      
-     } 
-     
+
+     }
+
      @GetMapping("/dining")
      public String dining(Model model) {
           // Create three DiningHall instances
@@ -81,7 +81,7 @@ public class WebController {
      @Transactional
      private void scrapeandclasscreation(ArrayList<DiningHall> dininghalls) {
           try {
-               String url = "https://hospitality.usc.edu/residential-dining-menus/?menu_date=November+30%2C+2023";
+               String url = "https://hospitality.usc.edu/residential-dining-menus/?menu_date=December+1%2C+2023";
                Document doc = Jsoup.connect(url).get();
 
                // selecting every category (ex. Expo/Flexitarian etc and saving into a private
@@ -91,7 +91,7 @@ public class WebController {
                for (Element section : diningHallSections) {
                     // extracting the dining hall name
                     String dhname = section.select("h3.menu-venue-title").text();
-                    
+
                     // Find the matching DiningHall object
                     DiningHall matchedDiningHall = null;
                     for (DiningHall hall : dininghalls) {
@@ -125,13 +125,16 @@ public class WebController {
                                              .equalsIgnoreCase("MADE TO ORDER BREAKFAST QUESADILLA BAR");
 
                                    for (Element menuItemElement : menuItems) {
-                                        // Deleting the <span> elements from itemName
                                         menuItemElement.select("span").remove();
                                         String itemName = menuItemElement.text();
 
+                                        // Skip the "MADE TO ORDER OMELETES" item
+                                        if (itemName.equalsIgnoreCase("MADE TO ORDER OMELETES")) {
+                                             continue; // Immediately skip to the next iteration
+                                        }
+
                                         boolean itemExists = false;
                                         for (MenuItem existingItem : matchedDiningHall.getMenu()) {
-                                             // Check for duplicates based on itemName and categoryName
                                              if (existingItem.getItem_name().equals(itemName)
                                                        && existingItem.getCategory().equals(categoryName)) {
                                                   itemExists = true;
@@ -140,9 +143,9 @@ public class WebController {
                                         }
 
                                         if (!itemExists) {
-                                             String processedItemName = itemName; // Create a new variable
+                                             String processedItemName = itemName; // Initialize with original itemName
+
                                              if (isMadeToOrderOmelets) {
-                                                  // Process all items with the prefix
                                                   processedItemName = "Made to Order Omelete ingredient: " + itemName;
                                              } else if (isPhoBowlBar) {
                                                   processedItemName = "Pho Bowl Bar ingredient: " + itemName;
@@ -151,24 +154,26 @@ public class WebController {
                                                             + itemName;
                                              }
 
-                                        
+                                             // Create and save the MenuItem as before
                                              MenuItem menuItem = new MenuItem();
                                              menuItem.setDiningHall(matchedDiningHall);
                                              menuItem.setItem_name(processedItemName);
                                              menuItem.setCategory(categoryName);
                                              matchedDiningHall.getMenu().add(menuItem);
                                              menuItem = menuItemRepository.save(menuItem);
-                                             }                      
-                                      }
+                                        }
                                    }
+
                               }
                          }
                     }
+               }
           } catch (Exception e) {
                e.printStackTrace();
           }
      }
-      @GetMapping("/guestdininghall/USC-Village-Dining-Hall")
+
+     @GetMapping("/guestdininghall/USC-Village-Dining-Hall")
      public String guestuscvillage(Model model) {
           List<DiningHall> villageDiningHalls = DiningHallRepository.findByName("USC Village Dining Hall");
 
@@ -179,6 +184,7 @@ public class WebController {
           }
           return "guestvillage";
      }
+
      @GetMapping("/guestdininghall/Parkside-Restaurant-&-Grill")
      public String guestparkside(Model model) {
           List<DiningHall> parksideDiningHalls = DiningHallRepository.findByName("Parkside Restaurant & Grill");
@@ -237,13 +243,12 @@ public class WebController {
 
      @GetMapping("/indexPage")
      public String index() {
-         return "indexPage"; 
+          return "indexPage";
      }
 
-      @GetMapping("/UserProfile")
+     @GetMapping("/UserProfile")
      public String profile() throws IOException {
-         return "UserProfile"; 
+          return "UserProfile";
      }
-      
 
 }
