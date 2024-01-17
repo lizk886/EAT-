@@ -1,5 +1,5 @@
-# EAT! - Review and Visualization Platform for USC Daily Menus
-
+# EAT! - Review Platform for USC Daily Menus
+![Alt text](src/main/resources/static/images/EATLogo.png)
 ## Description
 EAT! is a web application designed to enhance the dining experience at USC by providing a comprehensive review system for dining hall meals. With our platform, USC students can make informed dining choices based on peer reviews and ratings of daily menu items.
 
