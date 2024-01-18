@@ -47,7 +47,8 @@ We welcome contributions and suggestions to the EAT! project. If you're interest
 
 ## Links
 - [Final Presentation Slides](https://docs.google.com/presentation/d/10uPl63IRxlGXcIbrokvlGJwpNu6SWowJYDTl5lTM57o/edit#slide=id.p)
-- [Demo Video and Walk-through](https://drive.google.com/drive/folders/1_z7wDMmL-xgdw6eH2sA_u2xbpYGSaEZi)
+- [Demo Video and Walk-through](https://drive.google.com/file/d/1hcdL7B6HrDLpYw6-EQTVcP-7bSPvH6GL/view)
+- [Project Documentation](https://drive.google.com/file/d/13Eq9QzJ01uno_rEv4taJaYPwIfc0DQSY/view)
 
 ## Acknowledgements
 Special thanks to our mentor Toan Huynh for guiding us throughout this project and to all those who contributed in various ways.
