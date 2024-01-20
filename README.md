@@ -40,7 +40,7 @@ To run EAT!, you'll need to have the following installed:
 5. Open your browser and navigate to `localhost:3000`
 
 ## Usage
-After logging in, users can browse the daily menus of USC dining halls, submit reviews, and rate dishes. For more detailed usage instructions, watch our [Demo Video](https://drive.google.com/drive/folders/1_z7wDMmL-xgdw6eH2sA_u2xbpYGSaEZi).
+After logging in, users can browse the daily menus of USC dining halls, submit reviews, and rate dishes. For more detailed usage instructions, watch our [Demo Video](https://drive.google.com/file/d/1oM9yNrBqd3ztNgnUXznrm973oCrnqMtk/view?usp=sharing).
 
 ## Contributing
 We welcome contributions and suggestions to the EAT! project. If you're interested in contributing, please contact us via emial.
